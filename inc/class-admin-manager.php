@@ -75,11 +75,11 @@ class Notify_For_Wordpress_Admin
        * https://developer.wordpress.org/reference/functions/add_submenu_page/
        */
         add_submenu_page(
-              'options-general.php',
+              'index.php',
               'Notify For Wordpress',
-              'Notify For WP',
+              'Notify Dashboard',
               'administrator',
-              'notify-for-wordpress-admin-page',
+              'notify-dashboard',
               [$this, 'render_notify_for_wp_admin_page'],
               '10'
           );
