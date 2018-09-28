@@ -15,7 +15,7 @@
     "wordpress"
   ],
   "support": {
-    "issues": "https://github.com/ministryofjustice/like-button-for-wordpress/issues"
+    "issues": "https://github.com/ministryofjustice/notify-for-wordpress/issues"
   },
   "require": {
     "php": ">=5.6",
