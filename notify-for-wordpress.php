@@ -1,15 +1,15 @@
 <?php
 /**
- * The file responsible for starting the Notify for Wordpress plugin
+ * The file responsible for starting the Notify for WordPress plugin
  *
- * The Notify for Wordpress is a plugin that displays the post meta data
+ * The Notify for WordPress is a plugin that displays the post meta data
  * associated with a given post. This particular file is responsible for
  * including the necessary dependencies and starting the plugin.
  *
- * @package nfwp
+ * @package NFWP
  *
  * @wordpress-plugin
- * Plugin Name:       Notify for Wordpress
+ * Plugin Name:       Notify for WordPress
  * Plugin URI:        http://wordpress.org/extend/plugins/
  * Description:       A notification plugin to help editors keep their content up-to-date
  * Version:           0.1.0
@@ -41,41 +41,94 @@
   SOFTWARE.
 
 */
+namespace Notify_For_Wordpress;
 
 // Exit if file is accessed directly.
-if (! defined('ABSPATH')) {
-    die();
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
 }
 
 /**
- * Uninstall plugin
+ * Define Constants
  */
-register_uninstall_hook(__FILE__, 'nfwp_on_uninstall');
 
-function nfwp_on_uninstall()
-{
-    if (!current_user_can('activate_plugins')) {
-        return;
-    }
-    // Drop post and comment like database meta keys
-    // delete_post_meta_by_key('');
-    // delete_metadata('', null, '', '', true);
+define( __NAMESPACE__ . '\NF', __NAMESPACE__ . '\\' );
+
+define( NF . 'PLUGIN_NAME', 'nfwp-notify-for-wp' );
+
+define( NF . 'PLUGIN_VERSION', '0.2.0' );
+
+define( NF . 'PLUGIN_NAME_DIR', plugin_dir_path( __FILE__ ) );
+
+define( NF . 'PLUGIN_NAME_URL', plugin_dir_url( __FILE__ ) );
+
+define( NF . 'PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+
+define( NF . 'PLUGIN_TEXT_DOMAIN', 'notify-for-wordpress' );
+
+/**
+ * Autoload Classes
+ */
+require_once PLUGIN_NAME_DIR . 'inc/libraries/autoloader.php';
+
+/**
+ * Register Activation and Deactivation Hooks
+ * This action is documented in inc/core/class-activator.php
+ */
+register_activation_hook( __FILE__, array( NF . 'Inc\Core\Activator', 'activate' ) );
+
+/**
+ * The code that runs during plugin deactivation.
+ * This action is documented inc/core/class-deactivator.php
+ */
+register_deactivation_hook( __FILE__, array( NF . 'Inc\Core\Deactivator', 'deactivate' ) );
+
+/**
+ * Plugin Singleton Container
+ *
+ * Maintains a single copy of the plugin app object
+ *
+ * @since    0.2.0
+ */
+class Notify_For_Wordpress {
+
+	static $init;
+	/**
+	 * Loads the plugin
+	 *
+	 * @access    public
+	 */
+	public static function init() {
+
+		if ( null == self::$init ) {
+
+			self::$init = new Inc\Core\Init();
+			self::$init->run();
+		}
+
+		return self::$init;
+	}
+
 }
 
-/**
- * Include the core class responsible for loading all necessary components of the plugin.
+/*
+ * Begin plugin execution
+ *
+ * Since everything within the plugin is registered via hooks,
+ * then kicking off the plugin from this point in the file does
+ * not affect the page life cycle.
+ *
+ * Also returns copy of the app object so 3rd party developers
+ * can interact with the plugin's hooks contained within.
+ *
  */
-require_once plugin_dir_path(__FILE__) . 'inc/class-manager.php';
+function notify_for_wordpress_init() {
+		return Notify_For_Wordpress::init();
+}
 
-/**
- * Instantiates the run Notify for Wordpress class and then
- * calls its run method officially starting up the plugin.
- */
-  function run_notify_for_wordpress()
-  {
-      $nfwp = new Notify_For_Wordpress_Manager();
-      $nfwp->run();
-  }
+$min_php = '5.6.0';
 
-// Call the above function to begin execution of the plugin.
-run_notify_for_wordpress();
+// Check the minimum required PHP version and run the plugin.
+if ( version_compare( PHP_VERSION, $min_php, '>=' ) ) {
+		notify_for_wordpress_init();
+}
