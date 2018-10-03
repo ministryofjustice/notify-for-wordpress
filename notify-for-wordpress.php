@@ -2,9 +2,8 @@
 /**
  * The file responsible for starting the Notify for WordPress plugin
  *
- * The Notify for WordPress is a plugin that displays the post meta data
- * associated with a given post. This particular file is responsible for
- * including the necessary dependencies and starting the plugin.
+ * The Notify for WordPress is a plugin that allows users to setup notifications
+ * on out of date content.
  *
  * @package NFWP
  *
@@ -51,10 +50,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Define Constants
  */
-
 define( __NAMESPACE__ . '\NF', __NAMESPACE__ . '\\' );
 
-define( NF . 'PLUGIN_NAME', 'nfwp-notify-for-wp' );
+define( NF . 'PLUGIN_NAME', 'notify-for-wordpress' );
 
 define( NF . 'PLUGIN_VERSION', '0.2.0' );
 
@@ -90,7 +88,8 @@ register_deactivation_hook( __FILE__, array( NF . 'Inc\Core\Deactivator', 'deact
  *
  * @since    0.2.0
  */
-class Notify_For_Wordpress {
+class Notify_For_Wordpress
+{
 
 	static $init;
 	/**

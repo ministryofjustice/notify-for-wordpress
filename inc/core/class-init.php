@@ -6,25 +6,14 @@ use Notify_For_Wordpress as NF;
 use Notify_For_Wordpress\Inc\Admin as Admin;
 
 /**
-* The Notify For WordPress manager is the core plugin responsible for including and
-* instantiating all of the code that composes the plugin
+* class-init.php is the core file responsible for including and
+* instantiating much of the code that composes the plugin
 *
 * @package NFWP
-*/
-
-/**
-*
-* The Notify For WordPress includes an instance to the Notify For WordPress
-* Loader which is responsible for coordinating the hooks that exist within the
-* plugin.
-*
-* It also maintains a reference to the plugin slug which can be used in
-* internationalization, and a reference to the current version of the plugin
-* so that we can easily update the version in a single place to provide
-* cache busting functionality when including scripts and styles.
 *
 * @since 0.2.0
 */
+
 // Exit if file is accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	die();
@@ -36,16 +25,14 @@ class Init {
 	 * A reference to the loader class that coordinates the hooks and callbacks
 	 * throughout the plugin.
 	 *
-	 * @access protected
-	 * @var    Loader $loader Manages hooks between the WordPress hooks and the callback functions.
+	 * @var    class $loader Manages hooks between the WordPress hooks and the callback functions.
 	 */
 	protected $loader;
 
 	/**
-	 * Represents the slug of hte plugin that can be used throughout the plugin
+	 * Represents the slug of the plugin that can be used throughout the plugin
 	 * for internationalization and other purposes.
 	 *
-	 * @access protected
 	 * @var    string $plugin_slug The single, hyphenated string used to identify this plugin.
 	 */
 	protected $plugin_slug;
@@ -54,7 +41,6 @@ class Init {
 	 * Maintains the current version of the plugin so that we can use it throughout
 	 * the plugin.
 	 *
-	 * @access protected
 	 * @var    string $version The current version of the plugin.
 	 */
 	protected $version;
@@ -62,15 +48,10 @@ class Init {
 	/**
 	 * Instantiates the plugin by setting up the core properties and loading
 	 * all necessary dependencies and defining the hooks.
-	 *
-	 * The constructor will define both the plugin slug and the verison
-	 * attributes, but will also use internal functions to import all the
-	 * plugin dependencies, and will leverage the Notify For WordPress loader for
-	 * registering the hooks and the callback functions used throughout the
-	 * plugin.
 	 */
 	public function __construct() {
-		$this->plugin_name        = NF\PLUGIN_NAME;
+
+		$this->plugin_slug        = NF\PLUGIN_NAME;
 		$this->version            = NF\PLUGIN_VERSION;
 		$this->plugin_basename    = NF\PLUGIN_BASENAME;
 		$this->plugin_text_domain = NF\PLUGIN_TEXT_DOMAIN;
@@ -80,16 +61,7 @@ class Init {
 	}
 
 	/**
-	 * Imports the Notify For WordPress administration classes, and the Notify For WordPress Loader.
-	 *
-	 * The Notify For WordPress Manager administration class defines all unique functionality for
-	 * introducing custom functionality into the WordPress dashboard.
-	 *
-	 * The Notify For WordPress Manager Loader is the class that will coordinate the hooks and callbacks
-	 * from WordPress and the plugin. This function instantiates and sets the reference to the
-	 * $loader class property.
-	 *
-	 * @access private
+	 * Loads all the plugin's main action hooks calling various functions.
 	 */
 	private function load_dependencies() {
 		$this->loader = new Loader();
@@ -101,8 +73,6 @@ class Init {
 	 *
 	 * This function relies on the Notify For WordPress Admin class and the Notify For WordPress
 	 * Loader class property.
-	 *
-	 * @access private
 	 */
 	private function define_admin_hooks() {
 

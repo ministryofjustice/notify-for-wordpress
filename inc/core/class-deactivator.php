@@ -23,7 +23,7 @@ class Deactivator {
 	 * @since    0.2.0
 	 */
 	public static function deactivate() {
-
+		// add database removal here and maybe an alert message to tell ppl deletions will occur if u delete plugin.
 	}
 
 }

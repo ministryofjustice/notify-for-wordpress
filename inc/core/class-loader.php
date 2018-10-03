@@ -17,7 +17,8 @@ namespace Notify_For_Wordpress\Inc\Core;
  * @since 0.1.0
  */
 
-class Loader {
+class Loader
+{
 
 	/**
 	 * A reference to the collection of actions used throughout the plugin.
