@@ -8,15 +8,17 @@
  * @package NFWP
  */
 
- // Exit if file is accessed directly.
- if (! defined('ABSPATH')) {
-     die();
- }
-
 $plugin_version = $this->version;
+$change_over_year = $this->query_db_unchanged_posts();
 
-echo "<h1>Content management and notification dashboard</h1>";
-echo "<h4>Set notifications and keep your content up-to-date</h4>";
+echo "<h1>Notify dashboard</h1>";
+echo "<h4>Set notifications to keep track of page updates and keep your content up-to-date</h4>";
+echo "<br>";
+
+echo '<pre>';
+print_r($change_over_year);
+echo '</pre>';
+
 echo "<br>";
 echo "<p>Notify for Wordpress plugin</p>";
 echo "Version: " . $plugin_version;

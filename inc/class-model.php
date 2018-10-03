@@ -10,7 +10,7 @@
 /**
  *
  *
- * @since 1.0.0
+ * @since 0.1.0
  */
 
  // Exit if file is accessed directly.
@@ -36,12 +36,6 @@ class Notify_For_Wordpress_Model
     public function __construct($version)
     {
         $this->version = $version;
-    }
-
-    public function process_database() {
-
-      //echo die('hello');
-
     }
 
 }

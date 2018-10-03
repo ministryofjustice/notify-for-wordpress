@@ -37,6 +37,14 @@ class Notify_For_Wordpress_Manager
     protected $loader;
 
     /**
+    * A reference to the loader class that coordinates the hooks and callbacks
+    * throughout the plugin.
+    *
+    * @access protected
+    * @var    Notify_For_Wordpress_Model $model
+    */
+
+    /**
     * Represents the slug of hte plugin that can be used throughout the plugin
     * for internationalization and other purposes.
     *
@@ -71,7 +79,6 @@ class Notify_For_Wordpress_Manager
 
         $this->load_dependencies();
         $this->define_admin_hooks();
-        $this->define_model_hooks();
     }
 
     /**
@@ -91,6 +98,7 @@ class Notify_For_Wordpress_Manager
         require_once plugin_dir_path(dirname(__FILE__)) . 'inc/class-admin-manager.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'inc/class-model.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'inc/class-loader.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'inc/class-notify-post-list-table.php';
 
         $this->loader = new Notify_For_Wordpress_Loader();
     }
@@ -110,22 +118,7 @@ class Notify_For_Wordpress_Manager
 
         $this->loader->add_action('admin_enqueue_scripts', $admin, 'enqueue_styles');
         $this->loader->add_action('admin_menu', $admin, 'notify_for_wordpress_menu');
-    }
-
-    /**
-     * Defines the hooks and callback functions that are used for setting up the plugin stylesheets
-     * and the plugin's meta box.
-     *
-     * This function relies on the Notify For Wordpress Admin class and the Notify For Wordpress
-     * Loader class property.
-     *
-     * @access private
-     */
-    private function define_model_hooks()
-    {
-      $admin = new Notify_For_Wordpress_Model($this->get_version());
-
-      $this->loader->add_action('plugins_loaded', $admin, 'process_database');
+        $this->loader->add_action('admin_menu', $admin, 'query_db_unchanged_posts');
     }
 
     /**
