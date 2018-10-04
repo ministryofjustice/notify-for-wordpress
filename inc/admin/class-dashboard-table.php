@@ -23,8 +23,8 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 
 			$table_columns = array(
 				'cb'            => '<input type="checkbox" />', // to display the checkbox.
-				'post_title'    => __( 'Post title', $this->plugin_text_domain ),
 				'post_modified' => __( 'Last modified', $this->plugin_text_domain ),
+				'post_title'    => __( 'Post title', $this->plugin_text_domain ),
 				'post_status'   => _x( 'Post status', 'column name', $this->plugin_text_domain ),
 				'ID'            => __( 'Post ID', $this->plugin_text_domain ),
 			);
