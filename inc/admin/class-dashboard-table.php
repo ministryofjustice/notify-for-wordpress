@@ -1,6 +1,7 @@
 <?php
 
 namespace Notify_For_Wordpress\Inc\Admin;
+use Notify_For_Wordpress\Libraries;
 
 // Exit if file is accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,13 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 0.1.0
  */
-class Dashboard_Table
+class Dashboard_Table extends Libraries\WP_List_Table
 {
 
-	if ( ! class_exists( 'WP_List_Table' ) ) {
-		require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
-	}
-
-	
+  public function get_columns() {}
+  public function prepare_items() {}
 
 }
