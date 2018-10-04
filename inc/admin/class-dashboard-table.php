@@ -1,7 +1,8 @@
 <?php
 
 namespace Notify_For_Wordpress\Inc\Admin;
-use Notify_For_Wordpress\Libraries;
+
+use Notify_For_Wordpress\Inc\Libraries;
 
 // Exit if file is accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
