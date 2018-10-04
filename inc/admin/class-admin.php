@@ -33,12 +33,12 @@ class Admin {
 	private $version;
 
 	/**
-	* The text domain of this plugin.
-	*
-	* @since    1.0.0
-	* @access   private
-	* @var      string    $plugin_text_domain    The text domain of this plugin.
-	*/
+	 * The text domain of this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $plugin_text_domain    The text domain of this plugin.
+	 */
 	private $plugin_text_domain;
 
 	/**
@@ -54,14 +54,14 @@ class Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param    string $plugin_name	The name of this plugin.
-	 * @param    string $version	The version of this plugin.
-	 * @param	 string $plugin_text_domain	The text domain of this plugin
+	 * @param    string $plugin_name    The name of this plugin.
+	 * @param    string $version    The version of this plugin.
+	 * @param    string $plugin_text_domain The text domain of this plugin
 	 */
 	public function __construct( $plugin_name, $version, $plugin_text_domain ) {
 
-		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->plugin_name        = $plugin_name;
+		$this->version            = $version;
 		$this->plugin_text_domain = $plugin_text_domain;
 
 	}
@@ -107,37 +107,38 @@ class Admin {
 		);
 
 		/*
-	 * The $page_hook_suffix can be combined with the load-($page_hook) action hook
-	 * https://codex.wordpress.org/Plugin_API/Action_Reference/load-(page)
-	 *
-	 * The callback below will be called when the respective page is loaded
-	 */
-		add_action( 'load-'.$page_hook, array( $this, 'render_notify_for_wp_dashboard_screen_options' ) );
+		* The $page_hook_suffix can be combined with the load-($page_hook) action hook
+		* https://codex.wordpress.org/Plugin_API/Action_Reference/load-(page)
+		*
+		* The callback below will be called when the respective page is loaded
+		*/
+		add_action( 'load-' . $page_hook, array( $this, 'render_notify_for_wp_dashboard_screen_options' ) );
 
 	}
 
 	/**
-	* Screen options for the List Table
-	*
-	* Callback for the load-($page_hook_suffix)
-	* Called when the plugin page is loaded
-	*
-	* @since    1.0.0
-	*/
+	 * Screen options for the List Table
+	 *
+	 * Callback for the load-($page_hook_suffix)
+	 * Called when the plugin page is loaded
+	 *
+	 * @since    1.0.0
+	 */
 	public function render_notify_for_wp_dashboard_screen_options() {
 
 		$arguments = array(
-			'label'		=>	__( 'Users Per Page', $this->plugin_text_domain ),
-			'default'	=>	5,
-			'option'	=>	'users_per_page'
+			'label'   => __( 'Users Per Page', $this->plugin_text_domain ),
+			'default' => 5,
+			'option'  => 'users_per_page',
 		);
 
-	add_screen_option( 'per_page', $arguments );
-	/*
-	 * Instantiate the User List Table. Creating an instance here will allow the core WP_List_Table class to automatically
-	 * load the table columns in the screen options panel
-	 */
-	$this->dashboard_table = new Dashboard_Table( $this->plugin_text_domain );
+		add_screen_option( 'per_page', $arguments );
+		/*
+		 * Instantiate the User List Table. Creating an instance here will allow the core WP_List_Table class to automatically
+		 * load the table columns in the screen options panel
+		 */
+		$this->dashboard_table = new Dashboard_Table( $this->plugin_text_domain );
+
 	}
 
 	/**
@@ -147,7 +148,7 @@ class Admin {
 
 		$this->dashboard_table->prepare_items();
 
-		require_once plugin_dir_path( __FILE__ ) . 'view/view-dashboard.php';
+		include_once 'view/view-dashboard.php';
 
 	}
 }
