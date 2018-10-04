@@ -78,6 +78,6 @@ class Admin {
 	 * Requires the file that is used to display the admin interface page.
 	 */
 	public function render_notify_for_wp_admin_page() {
-		 require_once plugin_dir_path( __FILE__ ) . 'example-view.php';
+		 require_once plugin_dir_path( __FILE__ ) . 'view/view-dashboard.php';
 	}
 }
