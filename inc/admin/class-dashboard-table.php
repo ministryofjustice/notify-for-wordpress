@@ -116,7 +116,6 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 		$sortable_columns = array(
 			'post_modified' => 'post_modified',
 			'post_title'    => 'post_title',
-			'ID'            => array( 'ID', true ),
 			'post_status'   => 'post_status',
 		);
 
