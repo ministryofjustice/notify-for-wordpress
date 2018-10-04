@@ -47,6 +47,24 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 		// start by assigning your data to the items variable
 		$this->items = $table_data;
 
+		// code for pagination
+		$users_per_page = $this->get_items_per_page( 'post_title' );
+
+		$table_page = $this->get_pagenum();
+
+		// provide the ordered data to the List Table
+		// we need to manually slice the data based on the current pagination
+		$this->items = array_slice( $table_data, ( ( $table_page - 1 ) * $users_per_page ), $users_per_page );
+
+		// set the pagination arguments
+		$total_users = count( $table_data );
+
+		$this->set_pagination_args( array (
+			'total_items' => $total_users,
+			'per_page'    => $users_per_page,
+			'total_pages' => ceil( $total_users/$users_per_page )
+		) );
+
 	}
 
 	public function fetch_table_data() {
@@ -66,7 +84,7 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 									 WHERE post_status IN ('publish','draft')
 									 AND post_type = 'page'
 									 AND post_modified < '{$one_year_from_current_time}'
-									 ORDER BY $orderby $order LIMIT 0,100";
+									 ORDER BY $orderby $order";
 
 		// query output_type will be an associative array with ARRAY_A.
 		$query_results = $wpdb->get_results( $user_query, ARRAY_A );
@@ -94,8 +112,8 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 		 * specify which columns should have the sort icon.
 		 */
 		$sortable_columns = array (
-				'post_title'=>'post_title',
 				'post_modified'=>'post_modified',
+				'post_title'=>'post_title',
 				'ID' => array( 'ID', true ),
 				'post_status'=>'post_status'
 			);
