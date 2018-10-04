@@ -1,8 +1,7 @@
 <?php
 /**
- * Displays the admin dashboard interface for Notify For WordPress.
+ * Displays the admin dashboard for the plugin.
  *
- * This is a partial template that is included by the Notify For WordPress
  *
  * @package NFWP
  */
@@ -17,7 +16,7 @@ echo '<h4>Set notifications to keep track of page updates and keep your content 
 echo '<br>';
 
 echo '<pre>';
-var_dump( $outdated_pages->nfwp_outdated() );
+var_dump( $outdated_pages->content_outdated_all() );
 echo '</pre>';
 
 echo '<br>';

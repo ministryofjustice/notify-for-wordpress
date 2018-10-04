@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Model
 {
 
-	public function nfwp_outdated() {
+	public function content_outdated_all() {
 
 		global $wpdb;
 
@@ -47,10 +47,5 @@ class Model
 		return $published_posts;
 
 	}
-
-
-	// if ( ! class_exists( 'WP_List_Table' ) ) {
-	// 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
-	// }
 
 }
