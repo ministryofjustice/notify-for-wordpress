@@ -20,6 +20,7 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 
 
 	public function get_columns() {
+
 			$table_columns = array(
 				'cb'              => '<input type="checkbox" />', // to display the checkbox.
 				'user_login'      => __( 'User Login', $this->plugin_text_domain ),
@@ -27,6 +28,7 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 				'user_registered' => _x( 'Registered On', 'column name', $this->plugin_text_domain ),
 				'ID'              => __( 'User Id', $this->plugin_text_domain ),
 			);
+			
 		return $table_columns;
 	}
 
@@ -48,7 +50,9 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 	}
 
 	public function fetch_table_data() {
+
 		global $wpdb;
+
 		$wpdb_table = $wpdb->prefix . 'users';
 		$orderby    = ( isset( $_GET['orderby'] ) ) ? esc_sql( $_GET['orderby'] ) : 'user_registered';
 		$order      = ( isset( $_GET['order'] ) ) ? esc_sql( $_GET['order'] ) : 'ASC';
@@ -57,6 +61,7 @@ class Dashboard_Table extends Libraries\WP_List_Table {
                       FROM
                         $wpdb_table
                       ORDER BY $orderby $order";
+
 		// query output_type will be an associative array with ARRAY_A.
 		$query_results = $wpdb->get_results( $user_query, ARRAY_A );
 
@@ -65,6 +70,7 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 	}
 
 	public function column_default( $item, $column_name ) {
+
 		switch ( $column_name ) {
 			case 'display_name':
 			case 'user_registered':
