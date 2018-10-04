@@ -22,11 +22,11 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 	public function get_columns() {
 
 			$table_columns = array(
-				'cb'              => '<input type="checkbox" />', // to display the checkbox.
-				'post_title'      => __( 'Post title', $this->plugin_text_domain ),
-				'post_modified'    => __( 'Last modified', $this->plugin_text_domain ),
-				'post_status' => _x( 'Post status', 'column name', $this->plugin_text_domain ),
-				'ID'              => __( 'Post ID', $this->plugin_text_domain ),
+				'cb'            => '<input type="checkbox" />', // to display the checkbox.
+				'post_title'    => __( 'Post title', $this->plugin_text_domain ),
+				'post_modified' => __( 'Last modified', $this->plugin_text_domain ),
+				'post_status'   => _x( 'Post status', 'column name', $this->plugin_text_domain ),
+				'ID'            => __( 'Post ID', $this->plugin_text_domain ),
 			);
 
 		return $table_columns;
@@ -53,6 +53,9 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 
 		global $wpdb;
 
+		$current_time               = current_time( 'mysql' );
+		$one_year_from_current_time = date( 'Y-m-d H:i:s', strtotime( $current_time ) - 31536000 ); // minus one year
+
 		$wpdb_table = $wpdb->prefix . 'posts';
 
 		$orderby = ( isset( $_GET['orderby'] ) ) ? esc_sql( $_GET['orderby'] ) : 'post_modified';
@@ -62,42 +65,42 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 									 FROM $wpdb_table
 									 WHERE post_status IN ('publish','draft')
 									 AND post_type = 'page'
-									 ORDER BY $orderby $order LIMIT 0,50";
+									 AND post_modified < '{$one_year_from_current_time}'
+									 ORDER BY $orderby $order LIMIT 0,100";
 
 		// query output_type will be an associative array with ARRAY_A.
 		$query_results = $wpdb->get_results( $user_query, ARRAY_A );
 
 		// return result array to prepare_items.
 		return $query_results;
-
-		// global $wpdb;
-		//
-		// $wpdb_table = $wpdb->prefix . 'users';
-		//
-		// $orderby = ( isset( $_GET['orderby'] ) ) ? esc_sql( $_GET['orderby'] ) : 'user_registered';
-		// $order   = ( isset( $_GET['order'] ) ) ? esc_sql( $_GET['order'] ) : 'ASC';
-		//
-		// $user_query = "SELECT user_login, display_name, user_registered, ID
-	  //                FROM $wpdb_table
-	  //                ORDER BY $orderby $order";
-		//
-		// // query output_type will be an associative array with ARRAY_A.
-		// $query_results = $wpdb->get_results( $user_query, ARRAY_A );
-		//
-		// // return result array to prepare_items.
-		// return $query_results;
 	}
 
 	public function column_default( $item, $column_name ) {
 
 		switch ( $column_name ) {
-			case 'display_name':
-			case 'user_registered':
+			case 'post_title':
+			case 'post_modified':
+			case 'post_status':
 			case 'ID':
 				return $item[ $column_name ];
 			default:
 				return $item[ $column_name ];
 		}
+	}
+
+	protected function get_sortable_columns() {
+		/*
+		 * actual sorting still needs to be done by prepare_items.
+		 * specify which columns should have the sort icon.
+		 */
+		$sortable_columns = array (
+				'post_title'=>'post_title',
+				'post_modified'=>'post_modified',
+				'ID' => array( 'ID', true ),
+				'post_status'=>'post_status'
+			);
+
+		return $sortable_columns;
 	}
 
 }
