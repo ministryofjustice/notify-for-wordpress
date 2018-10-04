@@ -24,9 +24,9 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 			$table_columns = array(
 				'cb'            => '<input type="checkbox" />', // to display the checkbox.
 				'post_modified' => __( 'Last modified', $this->plugin_text_domain ),
-				'post_title'    => __( 'Post title', $this->plugin_text_domain ),
-				'post_status'   => _x( 'Post status', 'column name', $this->plugin_text_domain ),
-				'ID'            => __( 'Post ID', $this->plugin_text_domain ),
+				'post_title'    => __( 'Page title', $this->plugin_text_domain ),
+				'post_status'   => _x( 'Page status', 'column name', $this->plugin_text_domain ),
+				'ID'            => __( 'Page ID', $this->plugin_text_domain ),
 			);
 
 		return $table_columns;
@@ -59,11 +59,13 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 		// set the pagination arguments
 		$total_users = count( $table_data );
 
-		$this->set_pagination_args( array (
-			'total_items' => $total_users,
-			'per_page'    => $users_per_page,
-			'total_pages' => ceil( $total_users/$users_per_page )
-		) );
+		$this->set_pagination_args(
+			array(
+				'total_items' => $total_users,
+				'per_page'    => $users_per_page,
+				'total_pages' => ceil( $total_users / $users_per_page ),
+			)
+		);
 
 	}
 
@@ -111,12 +113,12 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 		 * actual sorting still needs to be done by prepare_items.
 		 * specify which columns should have the sort icon.
 		 */
-		$sortable_columns = array (
-				'post_modified'=>'post_modified',
-				'post_title'=>'post_title',
-				'ID' => array( 'ID', true ),
-				'post_status'=>'post_status'
-			);
+		$sortable_columns = array(
+			'post_modified' => 'post_modified',
+			'post_title'    => 'post_title',
+			'ID'            => array( 'ID', true ),
+			'post_status'   => 'post_status',
+		);
 
 		return $sortable_columns;
 	}
