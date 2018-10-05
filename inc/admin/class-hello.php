@@ -6,6 +6,5 @@ class Hello {
 
 	public function hello_world() {
 		echo 'hello world';
-		die();
 	}
 }
