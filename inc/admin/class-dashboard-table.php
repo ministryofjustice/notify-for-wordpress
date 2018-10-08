@@ -75,6 +75,7 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 
 		$current_time               = current_time( 'mysql' );
 		$one_year_from_current_time = date( 'Y-m-d H:i:s', strtotime( $current_time ) - 31536000 ); // minus one year
+		$context                    = 'hq';
 
 		$wpdb_table = $wpdb->prefix . 'posts';
 
@@ -83,9 +84,14 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 
 		$user_query = "SELECT post_title, post_modified, post_status, ID
 									 FROM $wpdb_table
+									 LEFT JOIN $wpdb->term_relationships ON ( $wpdb->posts.ID = $wpdb->term_relationships.object_id )
+									 LEFT JOIN $wpdb->term_taxonomy ON ( $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id )
+									 LEFT JOIN $wpdb->terms ON ( $wpdb->term_taxonomy.term_id = $wpdb->terms.term_id )
 									 WHERE post_status IN ('publish','draft')
 									 AND post_type = 'page'
 									 AND post_modified < '{$one_year_from_current_time}'
+									 AND $wpdb->term_taxonomy.taxonomy = 'agency'
+									 AND $wpdb->terms.slug IN ( 'hq', '%s' )
 									 ORDER BY $orderby $order";
 
 		// query output_type will be an associative array with ARRAY_A.
