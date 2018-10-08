@@ -34,20 +34,44 @@ class Email {
   /**
    * This function collects the email address from the metabox the user has entered.
    */
+
   public function send_email()
 	{
-    global $post;
-		//$email_address = get_post_meta($post -> ID, '_notify_email');
-    $email_address = 'faaaaakerrr@pola.com';
-		$to = $email_address;
-    $title = get_the_title( $post -> ID );
-		$subject = 'Email now from page ' . $title;
+
+		global $post;
+
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+
+		// If this is just a revision, don't send the email.
+		if ( wp_is_post_revision( $post -> ID ) || wp_is_post_autosave( $post -> ID) ) {
+			return;
+		}
+
+    $get_email = get_post_meta($post -> ID, '_notify_email');
+		$title = get_the_title( $post -> ID );
+		$post_url = get_permalink( $post -> ID );
+
+		$to = $get_email[0];
+		//$to = 'anotheruser@example.com';
+		$subject = $title;
 		$message = '1. This is a test of the wp_mail function: wp_mail is working';
 		$headers = '';
 		require_once $_SERVER['DOCUMENT_ROOT'] . '/wp/wp-load.php';
+
 		// send test message using wp_mail function.
-		$sent_message = wp_mail( $to, $subject, $message, $headers );
+		wp_mail( $to, $subject, $message, $headers );
+
+		wp_schedule_single_event( time(), 'send_email' );
+	}
+
+	public function schedule_email()
+	{
 
 	}
+
+
+
 
 }

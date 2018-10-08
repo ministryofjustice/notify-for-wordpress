@@ -58,8 +58,8 @@ class Init {
 
 		$this->load_dependencies();
 		$this->define_admin_hooks();
-		$this->define_email_hooks();
 		$this->define_metabox_hooks();
+		$this->define_email_hooks();
 	}
 
 	/**
@@ -87,20 +87,6 @@ class Init {
 
 	/*
 	*
-	* This function relies on the Notify For WordPress Email class and the Notify For WordPress
-	* Loader class property.
-	*
-	*/
-	private function define_email_hooks() {
-
-		$plugin_admin = new Admin\Email( $this->get_version() );
-
-		$this->loader->add_action('wp', $plugin_admin, 'send_email');
-
-	}
-
-	/*
-	*
 	* This function relies on the Notify For WordPress Metabox class and the Notify For WordPress
 	* Loader class property.
 	*
@@ -111,6 +97,21 @@ class Init {
 
 		$this->loader->add_action('init', $plugin_admin, 'init_metabox');
 
+	}
+
+	/*
+	*
+	* This function relies on the Notify For WordPress Email class and the Notify For WordPress
+	* Loader class property.
+	*
+	*/
+	private function define_email_hooks() {
+
+		$plugin_admin = new Admin\Email( $this->get_version() );
+
+		//$this->loader->add_action('init', $plugin_admin, 'schedule_email');
+		
+		$this->loader->add_action('schedule_email', $plugin_admin, 'send_email', 10, 2);
 	}
 
 	/**
