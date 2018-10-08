@@ -97,7 +97,6 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 
 	public function column_default( $item, $column_name ) {
 
-		// var_dump($item); die();
 		switch ( $column_name ) {
 			case 'post_title':
 				return '<a href="/wp/wp-admin/post.php?post=' . $item['ID'] . '&action=edit">' . $item[ $column_name ] . '</a>';

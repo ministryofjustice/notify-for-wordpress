@@ -72,7 +72,7 @@ class Admin {
 	public function enqueue_styles() {
 		wp_enqueue_style(
 			'notify-for-wordpress-admin',
-			plugin_dir_url( __FILE__ ) . '../assets/css/notify-for-wordpress-admin.css',
+			plugin_dir_url( __FILE__ ) . '../../assets/css/notify-for-wordpress-admin.css',
 			array(),
 			$this->version,
 			false
@@ -80,7 +80,7 @@ class Admin {
 
 		wp_enqueue_script(
 			'notify-for-wordpress-js-admin',
-			plugin_dir_url( __FILE__ ) . '../assets/js/notify-for-wordpress-admin.js',
+			plugin_dir_url( __FILE__ ) . '../../assets/js/notify-for-wordpress-admin.js',
 			array(),
 			$this->version,
 			true
