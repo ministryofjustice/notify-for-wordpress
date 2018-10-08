@@ -3,6 +3,7 @@
 namespace Notify_For_Wordpress\Inc\Admin;
 
 use Notify_For_Wordpress\Inc\Libraries;
+use Notify_For_Wordpress\Inc\Libraries\Agency_Context;
 
 // Exit if file is accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -33,7 +34,7 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 	}
 
 	public function no_items() {
-		_e( 'No users avaliable.', $this->plugin_text_domain );
+		_e( 'Pages all up to date, nothing to display.', $this->plugin_text_domain );
 	}
 
 	public function prepare_items() {
@@ -75,14 +76,15 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 
 		$current_time               = current_time( 'mysql' );
 		$one_year_from_current_time = date( 'Y-m-d H:i:s', strtotime( $current_time ) - 31536000 ); // minus one year
-		$context                    = 'hq';
+
+		$context = Agency_Context::get_agency_context();
 
 		$wpdb_table = $wpdb->prefix . 'posts';
 
 		$orderby = ( isset( $_GET['orderby'] ) ) ? esc_sql( $_GET['orderby'] ) : 'post_modified';
 		$order   = ( isset( $_GET['order'] ) ) ? esc_sql( $_GET['order'] ) : 'ASC';
 
-		$user_query = "SELECT post_title, post_modified, post_status, ID
+		$post_query = "SELECT post_title, post_modified, post_status, ID
 									 FROM $wpdb_table
 									 LEFT JOIN $wpdb->term_relationships ON ( $wpdb->posts.ID = $wpdb->term_relationships.object_id )
 									 LEFT JOIN $wpdb->term_taxonomy ON ( $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id )
@@ -91,11 +93,13 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 									 AND post_type = 'page'
 									 AND post_modified < '{$one_year_from_current_time}'
 									 AND $wpdb->term_taxonomy.taxonomy = 'agency'
-									 AND $wpdb->terms.slug IN ( 'hq', '%s' )
+									 AND $wpdb->terms.name = '%s'
 									 ORDER BY $orderby $order";
 
+		$prepared_query = $wpdb->prepare( $post_query, $context );
+
 		// query output_type will be an associative array with ARRAY_A.
-		$query_results = $wpdb->get_results( $user_query, ARRAY_A );
+		$query_results = $wpdb->get_results( $prepared_query, ARRAY_A );
 
 		// return result array to prepare_items.
 		return $query_results;
