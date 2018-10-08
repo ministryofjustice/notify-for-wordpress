@@ -48,22 +48,22 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 		$this->items = $table_data;
 
 		// code for pagination
-		$users_per_page = $this->get_items_per_page( 'post_title' );
+		$post_title_per_page = $this->get_items_per_page( 'post_title' );
 
 		$table_page = $this->get_pagenum();
 
 		// provide the ordered data to the List Table
 		// we need to manually slice the data based on the current pagination
-		$this->items = array_slice( $table_data, ( ( $table_page - 1 ) * $users_per_page ), $users_per_page );
+		$this->items = array_slice( $table_data, ( ( $table_page - 1 ) * $post_title_per_page ), $post_title_per_page );
 
 		// set the pagination arguments
-		$total_users = count( $table_data );
+		$total_pages = count( $table_data );
 
 		$this->set_pagination_args(
 			array(
-				'total_items' => $total_users,
-				'per_page'    => $users_per_page,
-				'total_pages' => ceil( $total_users / $users_per_page ),
+				'total_items' => $total_pages,
+				'per_page'    => $post_title_per_page,
+				'total_pages' => ceil( $total_pages / $post_title_per_page ),
 			)
 		);
 
