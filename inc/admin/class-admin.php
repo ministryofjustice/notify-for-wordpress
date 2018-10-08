@@ -126,13 +126,13 @@ class Admin {
 	 */
 	public function render_notify_for_wp_dashboard_screen_options() {
 
-		$arguments = array(
-			'label'   => __( 'Users Per Page', $this->plugin_text_domain ),
-			'default' => 5,
-			'option'  => 'users_per_page',
-		);
-
-		add_screen_option( 'per_page', $arguments );
+		// $arguments = array(
+		// 	'label'   => __( 'Users Per Page', $this->plugin_text_domain ),
+		// 	'default' => 5,
+		// 	'option'  => 'users_per_page',
+		// );
+		//
+		// add_screen_option( 'per_page', $arguments );
 		/*
 		 * Instantiate the User List Table. Creating an instance here will allow the core WP_List_Table class to automatically
 		 * load the table columns in the screen options panel
