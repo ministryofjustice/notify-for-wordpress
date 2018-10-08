@@ -1,11 +1,10 @@
 <?php
 
 /*
- * Copied from the WordPress core 
+ * Copied from the WordPress core
  * under /wp-admin/includes/
  */
-
-namespace NDS_WP_List_Table_Demo\Inc\Libraries;
+namespace Notify_For_Wordpress\Inc\Libraries;
 
 /**
  * Administration API: WP_List_Table class

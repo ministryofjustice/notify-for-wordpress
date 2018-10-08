@@ -33,9 +33,9 @@ class Init {
 	 * Represents the slug of the plugin that can be used throughout the plugin
 	 * for internationalization and other purposes.
 	 *
-	 * @var    string $plugin_slug The single, hyphenated string used to identify this plugin.
+	 * @var    string $plugin_name The single, hyphenated string used to identify this plugin.
 	 */
-	protected $plugin_slug;
+	protected $plugin_name;
 
 	/**
 	 * Maintains the current version of the plugin so that we can use it throughout
@@ -51,7 +51,7 @@ class Init {
 	 */
 	public function __construct() {
 
-		$this->plugin_slug        = NF\PLUGIN_NAME;
+		$this->plugin_name 				= NF\PLUGIN_NAME;
 		$this->version            = NF\PLUGIN_VERSION;
 		$this->plugin_basename    = NF\PLUGIN_BASENAME;
 		$this->plugin_text_domain = NF\PLUGIN_TEXT_DOMAIN;
@@ -78,11 +78,10 @@ class Init {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Admin\Admin( $this->get_version() );
+		$plugin_admin = new Admin\Admin( $this->get_plugin_name(), $this->get_version(), $this->get_plugin_text_domain() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'notify_for_wordpress_menu' );
-		// $this->loader->add_action('admin_menu', $admin, 'query_db_unchanged_posts');
 	}
 
 	/*
@@ -126,11 +125,29 @@ class Init {
 	}
 
 	/**
+	 * The name of the plugin used to uniquely identify it within the context of
+	 * WordPress and to define internationalization functionality.
+	 */
+	public function get_plugin_name() {
+		return $this->plugin_name;
+	}
+
+	/**
 	 * Returns the current version of the plugin to the caller.
 	 *
 	 * @return string $this->version The current version of the plugin.
 	 */
 	public function get_version() {
 		return $this->version;
+	}
+
+	/**
+	 * Retrieve the text domain of the plugin.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The text domain of the plugin.
+	 */
+	public function get_plugin_text_domain() {
+		return $this->plugin_text_domain;
 	}
 }

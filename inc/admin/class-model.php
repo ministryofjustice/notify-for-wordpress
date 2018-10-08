@@ -2,28 +2,22 @@
 
 namespace Notify_For_Wordpress\Inc\Admin;
 
-class Dashboard {
+// Exit if file is accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
 
+/**
+ * The Model class is mainly for queries to the db and other data related processes
+ *
+ * @package NFWP
+ *
+ * @since 0.1.0
+ */
+class Model
+{
 
-	if ( ! class_exists( 'WP_List_Table' ) ) {
-		require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
-	}
-
-	/**
-	 * Class to overwrite and extend the WP List Table.
-	 *
-	 * @package NFWP
-	 *
-	 * @since 0.1.0
-	 */
-
-	// Exit if file is accessed directly.
-	if ( ! defined( 'ABSPATH' ) ) {
-		die();
-	}
-
-
-	public function query_db_unchanged_posts() {
+	public function content_outdated_all() {
 
 		global $wpdb;
 
@@ -54,23 +48,4 @@ class Dashboard {
 
 	}
 
-
-
-	class Notify_Post_List_Table extends WP_List_Table {
-
-		/**
-		 * Constructor, we override the parent to pass our own arguments
-		 * We usually focus on three parameters: singular and plural labels, as well as whether the class supports AJAX.
-		 */
-		function __construct() {
-			parent::__construct(
-				array(
-					'singular' => 'wp_list_text_link', // Singular label
-					'plural'   => 'wp_list_test_links', // plural label, also this well be one of the table css class
-					'ajax'     => false, // We won't support Ajax for this table
-				)
-			);
-		}
-
-	}
 }
