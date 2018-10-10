@@ -58,8 +58,8 @@ class Init {
 
 		$this->load_dependencies();
 		$this->define_admin_hooks();
-		$this->define_metabox_hooks();
-		$this->define_email_hooks();
+		//$this->define_metabox_hooks();
+		//$this->define_email_hooks();
 	}
 
 	/**
