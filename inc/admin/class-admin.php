@@ -96,15 +96,16 @@ class Admin {
 		  * $menu_title, $capability, $menu_slug, $function and $position
 		  * https://developer.wordpress.org/reference/functions/add_submenu_page/
 		  */
-		$page_hook = add_submenu_page(
-			'index.php',
-			'Notify For WordPress',
-			'Notify Dashboard',
-			'administrator',
-			'notify-dashboard',
-			[ $this, 'render_notify_for_wp_dashboard' ],
-			'10'
-		);
+
+			$page_hook = add_submenu_page(
+				'index.php',
+				'Notify For WordPress',
+				'Notify dashboard',
+				'manage_options',
+				'notify-dashboard',
+				[ $this, 'render_notify_for_wp_dashboard' ],
+				'10'
+			);
 
 		/*
 		* The $page_hook_suffix can be combined with the load-($page_hook) action hook
@@ -127,9 +128,9 @@ class Admin {
 	public function render_notify_for_wp_dashboard_screen_options() {
 
 		// $arguments = array(
-		// 	'label'   => __( 'Users Per Page', $this->plugin_text_domain ),
-		// 	'default' => 5,
-		// 	'option'  => 'users_per_page',
+		// 'label'   => __( 'Users Per Page', $this->plugin_text_domain ),
+		// 'default' => 5,
+		// 'option'  => 'users_per_page',
 		// );
 		//
 		// add_screen_option( 'per_page', $arguments );
