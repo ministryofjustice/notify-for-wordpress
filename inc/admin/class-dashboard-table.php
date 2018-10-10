@@ -84,19 +84,41 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 		$orderby = ( isset( $_GET['orderby'] ) ) ? esc_sql( $_GET['orderby'] ) : 'post_modified';
 		$order   = ( isset( $_GET['order'] ) ) ? esc_sql( $_GET['order'] ) : 'ASC';
 
-		$post_query = "SELECT post_title, post_modified, post_status, ID
-									 FROM $wpdb_table
-									 LEFT JOIN $wpdb->term_relationships ON ( $wpdb->posts.ID = $wpdb->term_relationships.object_id )
-									 LEFT JOIN $wpdb->term_taxonomy ON ( $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id )
-									 LEFT JOIN $wpdb->terms ON ( $wpdb->term_taxonomy.term_id = $wpdb->terms.term_id )
-									 WHERE post_status IN ('publish','draft')
-									 AND post_type = 'page'
-									 AND post_modified < '{$one_year_from_current_time}'
-									 AND $wpdb->term_taxonomy.taxonomy = 'agency'
-									 AND $wpdb->terms.name = '%s'
-									 ORDER BY $orderby $order";
+		if ( $context === 'hq' ) :
 
-		$prepared_query = $wpdb->prepare( $post_query, $context );
+			$post_query = "SELECT post_title, post_modified, post_status, ID
+										 FROM $wpdb_table
+										 LEFT JOIN $wpdb->term_relationships ON ( $wpdb->posts.ID = $wpdb->term_relationships.object_id )
+										 LEFT JOIN $wpdb->term_taxonomy ON ( $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id )
+										 LEFT JOIN $wpdb->terms ON ( $wpdb->term_taxonomy.term_id = $wpdb->terms.term_id )
+										 WHERE post_status IN ('publish','draft')
+										 AND post_type = 'page'
+										 AND post_modified < '{$one_year_from_current_time}'
+										 AND $wpdb->term_taxonomy.taxonomy = 'agency'
+										 AND $wpdb->terms.name = '%s'
+										 ORDER BY $orderby $order";
+
+			$prepared_query = $wpdb->prepare( $post_query, $context );
+
+		else :
+
+			$post_query = "SELECT post_title, post_modified, post_status, ID
+										 FROM $wpdb_table
+										 LEFT JOIN $wpdb->term_relationships ON ( $wpdb->posts.ID = $wpdb->term_relationships.object_id )
+										 LEFT JOIN $wpdb->term_taxonomy ON ( $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id )
+										 LEFT JOIN $wpdb->terms ON ( $wpdb->term_taxonomy.term_id = $wpdb->terms.term_id )
+										 WHERE post_status IN ('publish','draft')
+										 AND post_type = 'page'
+										 AND post_modified < '{$one_year_from_current_time}'
+										 AND $wpdb->term_taxonomy.taxonomy = 'agency'
+										 AND $wpdb->terms.name = '%s'
+										 ORDER BY $orderby $order";
+
+			$prepared_query = $wpdb->prepare( $post_query, $context );
+
+		endif;
+
+
 
 		// query output_type will be an associative array with ARRAY_A.
 		$query_results = $wpdb->get_results( $prepared_query, ARRAY_A );
