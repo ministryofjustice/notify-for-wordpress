@@ -47,7 +47,7 @@ class Metabox {
       'Notification Remainder',
       array( $this, 'display' ),
       $post_types,
-      'side',
+      'normal',
       'core'
     );
 	}
@@ -99,11 +99,13 @@ class Metabox {
 
 		// Sanitize the user input.
 		$data_date = sanitize_text_field($_POST['notify_date']);
-		$data_email = sanitize_text_field($_POST['notify_email']);
+		$data_pageemail = sanitize_text_field($_POST['notify_pageowner']);
+		$data_contentemail = sanitize_text_field($_POST['notify_contentowner']);
 
 		// Update the meta field.
 		update_post_meta($post_id, '_notify_date', $data_date);
-		update_post_meta($post_id, '_notify_email', $data_email);
+		update_post_meta($post_id, '_notify_pageowner', $data_pageemail);
+		update_post_meta($post_id, '_notify_contentowner', $data_contentemail);
 
 	}
 

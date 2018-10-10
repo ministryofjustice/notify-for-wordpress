@@ -108,9 +108,7 @@ class Init {
 
 		$plugin_admin = new Admin\Email( $this->get_version() );
 
-		//$this->loader->add_action('init', $plugin_admin, 'schedule_email');
-		
-		$this->loader->add_action('schedule_email', $plugin_admin, 'send_email', 10, 2);
+		$this->loader->add_action('init', $plugin_admin, 'init_email');
 	}
 
 	/**
