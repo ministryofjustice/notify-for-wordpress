@@ -23,7 +23,6 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 	public function get_columns() {
 
 			$table_columns = array(
-				'cb'            => '<input type="checkbox" />', // to display the checkbox.
 				'post_modified' => __( 'Last modified', $this->plugin_text_domain ),
 				'post_title'    => __( 'Page title', $this->plugin_text_domain ),
 				'post_status'   => _x( 'Page status', 'column name', $this->plugin_text_domain ),
@@ -95,10 +94,8 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 										 AND post_type = 'page'
 										 AND post_modified < '{$one_year_from_current_time}'
 										 AND $wpdb->term_taxonomy.taxonomy = 'agency'
-										 AND $wpdb->terms.name = '%s'
+										 AND $wpdb->terms.slug = '%s'
 										 ORDER BY $orderby $order";
-
-			$prepared_query = $wpdb->prepare( $post_query, $context );
 
 		else :
 
@@ -111,14 +108,18 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 										 AND post_type = 'page'
 										 AND post_modified < '{$one_year_from_current_time}'
 										 AND $wpdb->term_taxonomy.taxonomy = 'agency'
-										 AND $wpdb->terms.name = '%s'
+										 AND $wpdb->terms.slug = '%s'
+										 AND $wpdb->posts.ID NOT IN
+													(SELECT object_id FROM  $wpdb->term_relationships
+													 LEFT JOIN $wpdb->term_taxonomy ON ( $wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id )
+													 LEFT JOIN $wpdb->terms ON ( $wpdb->term_taxonomy.term_id = $wpdb->terms.term_id )
+													 WHERE $wpdb->terms.slug = 'hq'
+													)
 										 ORDER BY $orderby $order";
-
-			$prepared_query = $wpdb->prepare( $post_query, $context );
 
 		endif;
 
-
+		$prepared_query = $wpdb->prepare( $post_query, $context );
 
 		// query output_type will be an associative array with ARRAY_A.
 		$query_results = $wpdb->get_results( $prepared_query, ARRAY_A );
