@@ -100,7 +100,7 @@ class Admin {
 			$page_hook = add_submenu_page(
 				'index.php',
 				'Notify For WordPress',
-				'Notify dashboard',
+				'Pages to review',
 				'manage_options',
 				'notify-dashboard',
 				[ $this, 'render_notify_for_wp_dashboard' ],
