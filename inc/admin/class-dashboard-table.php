@@ -26,7 +26,6 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 				'post_modified' => __( 'Last modified', $this->plugin_text_domain ),
 				'post_title'    => __( 'Page title', $this->plugin_text_domain ),
 				'post_status'   => _x( 'Page status', 'column name', $this->plugin_text_domain ),
-				'ID'            => __( 'Page ID', $this->plugin_text_domain ),
 			);
 
 		return $table_columns;
@@ -135,7 +134,6 @@ class Dashboard_Table extends Libraries\WP_List_Table {
 				return '<a href="/wp/wp-admin/post.php?post=' . $item['ID'] . '&action=edit">' . $item[ $column_name ] . '</a>';
 			case 'post_modified':
 			case 'post_status':
-			case 'ID':
 				return $item[ $column_name ];
 			default:
 				return $item[ $column_name ];
