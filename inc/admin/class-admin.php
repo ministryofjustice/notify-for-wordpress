@@ -104,7 +104,7 @@ class Admin {
 				'manage_options',
 				'notify-dashboard',
 				[ $this, 'render_notify_for_wp_dashboard' ],
-				'10'
+				11
 			);
 
 		/*
