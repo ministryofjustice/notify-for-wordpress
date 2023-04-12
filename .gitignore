@@ -1,5 +1,12 @@
 # Package: Notify for Wordpress
+#
+# IDEs
+.idea
 
+# Common OS
 *.log
 .DS_Store
 .env
+
+# Ephemeral / Dependencies
+vendor

@@ -7,21 +7,34 @@
   "authors": [
     {
       "name": "Ministry of Justice",
-      "email": "",
-      "homepage": "https://github.com/notify-for-wordpress"
+      "homepage": "https://github.com/ministryofjustice/notify-for-wordpress"
+    },
+    {
+      "name": "Adam Brown"
+    },
+    {
+      "name": "Damien Wilson",
+      "email": "damien.wilson@digital.justice.gov.uk"
     }
   ],
   "keywords": [
     "wordpress"
   ],
   "support": {
-    "issues": "https://github.com/ministryofjustice/notify-for-wordpress/issues"
+    "issues": "https://github.com/ministryofjustice/notify-for-wordpress/issues",
+    "email": "central-digital-product-team@digital.justice.gov.uk",
+    "security": "https://security-guidance.service.justice.gov.uk/.well-known/security.txt"
   },
   "require": {
-    "php": ">=5.6",
+    "php": ">=7.4",
     "composer/installers": "^1.4"
   },
   "extra" : {
     "installer-name": "notify-for-wordpress"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
   }
 }
