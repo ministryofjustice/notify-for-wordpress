@@ -102,7 +102,7 @@ You will need to have a working version of WordPress to run this plugin.
 ## Coding guidelines
 
 This plugin follows standards set by the WordPress organisation.
-https://codex.wordpress.org/Writing_a_Plugin
+https://developer.wordpress.org/plugins/
 
 Further this plugin, when possible follows the PHP Framework Interop Group's standards.
 http://www.php-fig.org/
