@@ -3,7 +3,7 @@
   "type": "wordpress-plugin",
   "license": "The MIT License (MIT)",
   "description": "Notify For Wordpress",
-  "homepage": "https://github.com/ministryofjustice/like-button-for-wordpress",
+  "homepage": "https://github.com/ministryofjustice/notify-for-wordpress",
   "authors": [
     {
       "name": "Ministry of Justice",

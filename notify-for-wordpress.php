@@ -9,9 +9,9 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Notify for WordPress
- * Plugin URI:        http://wordpress.org/extend/plugins/
+ * Plugin URI:        https://github.com/ministryofjustice/notify-for-wordpress
  * Description:       A notification plugin to help editors keep their content up-to-date
- * Version:           0.2.1
+ * Version:           0.2.2
  * Text Domain:       notify-for-wordpress
  * Domain Path:       /languages
  * Author:            Ministry of Justice
@@ -108,7 +108,7 @@ function notify_for_wordpress_init()
     return Notify_For_Wordpress::init();
 }
 
-$min_php = '5.6.0';
+$min_php = '7.4';
 
 // Check the minimum required PHP version and run the plugin.
 if (version_compare(PHP_VERSION, $min_php, '>=')) {
