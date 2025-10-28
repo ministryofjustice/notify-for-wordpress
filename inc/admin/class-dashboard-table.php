@@ -19,7 +19,25 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Dashboard_Table extends Libraries\WP_List_Table {
 
+	/**
+	 * The text domain of this plugin.
+	 *
+	 * @access   private
+	 * @var      string    $plugin_text_domain    The text domain of this plugin.
+	 */
+	private $plugin_text_domain;
 
+	/**
+	 * Initialize the class, set text_domain and run parent's __construct.
+	 *
+	 * @param    string $plugin_text_domain The text domain of this plugin
+	 */
+	public function __construct(string $plugin_text_domain)
+	{ 
+		parent::__construct();
+		$this->plugin_text_domain = $plugin_text_domain;
+	}
+	
 	public function get_columns() {
 
 			$table_columns = array(
