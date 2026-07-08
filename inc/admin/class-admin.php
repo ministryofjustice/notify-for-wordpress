@@ -67,27 +67,6 @@ class Admin {
 	}
 
 	/**
-	 * Enqueues the stylesheet responsible for styling the contents of the plugin on the site.
-	 */
-	public function enqueue_styles() {
-		wp_enqueue_style(
-			'notify-for-wordpress-admin',
-			plugin_dir_url( __FILE__ ) . '../../assets/css/notify-for-wordpress-admin.css',
-			array(),
-			$this->version,
-			false
-		);
-
-		wp_enqueue_script(
-			'notify-for-wordpress-js-admin',
-			plugin_dir_url( __FILE__ ) . '../../assets/js/notify-for-wordpress-admin.js',
-			array(),
-			$this->version,
-			true
-		);
-	}
-
-	/**
 	 * Registers the menus that will appear throughout the WP admin section.
 	 */
 	public function notify_for_wordpress_menu() {
